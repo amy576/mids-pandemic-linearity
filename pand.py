@@ -29,17 +29,67 @@ class Board:
                 self.data[epi+i] += 1
             if epi-i >= 0:
                 self.data[epi-i] += 1
-        print("New board: ", self.data)
+        # print("New board: ", self.data)
 
-        print(caseload)
         return caseload
 
 
+class Solver:
+    def __init__(self, board):
+        self.solve(board)
 
-board = Board(10,2)
+    def solve(self, board):
+        if isinstance(board, Board) == False:
+            print("first argument must be class type Board")
+        else:
+            n = board.size
+            guesses = 0
+            caseload = 0
 
-board.move(0)
+            while caseload == 0:
 
-board.move(1)
+                cities = []
+                splits = 2 * (guesses + 1)
+                for i in range(1, splits):
+                    cities.append((int(n/splits))*i)
 
-board.move(2)
+                for c in cities:
+                    city = c
+                    guesses += 1
+                    caseload = board.move(city)
+
+                    ## epicenter will always be equal to number of guesses if epicenter caseload starts at 1
+                    if caseload == guesses:
+                        print("Found it after {0} guesses: {1}".format(guesses,city))
+                        return city
+
+                    ## once a non-zero caseload is found, based on the number of guesses and the fact that the caseload
+                    ## spreads from the epicenter at a rate of 1, we know how many spaces away from the non-zero caseload
+                    ## the epicenter is
+                    elif caseload > 0:
+                        diff = guesses - caseload
+                        guesses += 1
+
+                        ## we need to check both "left" and "right" of this caseload though
+                        check1 = board.move(city+diff)
+                        if check1 == guesses:
+                            print("Found it after {0} guesses: {1}".format(guesses,city+diff))
+                            return city+diff
+                        else:
+                            print("Found it after {0} guesses: {1}".format(guesses,city-diff))
+                            return city-diff
+
+                
+# board = Board(10,2)
+# board = Board(10,3)
+# board = Board(1000,666)
+# board = Board(5000,4997)
+# board = Board(5000,4)
+
+# solver = Solver(board)
+
+# board.move(0)
+
+# board.move(1)
+
+# board.move(2)
