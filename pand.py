@@ -81,14 +81,14 @@ class Solver:
                         return city-diff
 
                 
-board = Board(10,2)
+# board = Board(10,2)
 # board = Board(10,3)
 # board = Board(1000,666)
 # board = Board(5000,4997)
 # board = Board(5000,4)
 
-solver = Solver(board)
-print(solver.solve())
+# solver = Solver(board)
+# print(solver.solve())
 
 # board.move(0)
 
