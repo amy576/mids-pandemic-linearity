@@ -13,13 +13,13 @@ class Board:
         except TypeError:
             print("the second argument must be an integer")
         self.epicenter = epicenter
-        print("Creating board: ", self.data)
+        # print("Creating board: ", self.data)
 
     ## this inspects a city
     def move(self, city):
         ## return the caseload discovered
         caseload = self.data[city]
-        print("Checking location {0}, Value = {1}".format(city, caseload))
+        # print("Checking location {0}, Value = {1}".format(city, caseload))
 
         ## pandemic spreads
         epi = self.epicenter
@@ -36,9 +36,10 @@ class Board:
 
 class Solver:
     def __init__(self, board):
-        self.solve(board)
+        self.board = board
 
-    def solve(self, board):
+    def solve(self):
+        board = self.board
         if isinstance(board, Board) == False:
             print("first argument must be class type Board")
         else:
@@ -60,7 +61,7 @@ class Solver:
 
                     ## epicenter will always be equal to number of guesses if epicenter caseload starts at 1
                     if caseload == guesses:
-                        print("Found it after {0} guesses: {1}".format(guesses,city))
+                        # print("Found it after {0} guesses: {1}".format(guesses,city))
                         return city
 
                     ## once a non-zero caseload is found, based on the number of guesses and the fact that the caseload
@@ -73,10 +74,10 @@ class Solver:
                         ## we need to check both "left" and "right" of this caseload though
                         check1 = board.move(city+diff)
                         if check1 == guesses:
-                            print("Found it after {0} guesses: {1}".format(guesses,city+diff))
+                            # print("Found it after {0} guesses: {1}".format(guesses,city+diff))
                             return city+diff
                         else:
-                            print("Found it after {0} guesses: {1}".format(guesses,city-diff))
+                            # print("Found it after {0} guesses: {1}".format(guesses,city-diff))
                             return city-diff
 
                 
@@ -87,6 +88,7 @@ class Solver:
 # board = Board(5000,4)
 
 # solver = Solver(board)
+# print(solver.solve())
 
 # board.move(0)
 
