@@ -18,9 +18,28 @@ class Board:
     ## this inspects a city
     def move(self, city):
         ## return the caseload discovered
-        print("Checking location ", city, ", Value = ", self.data[city])
+        caseload = self.data[city]
+        print("Checking location {0}, Value = {1}".format(city, caseload))
+
+        ## pandemic spreads
+        epi = self.epicenter
+        self.data[epi] += 1
+        for i in range(1, self.data[epi]):
+            if epi+i < len(self.data):
+                self.data[epi+i] += 1
+            if epi-i >= 0:
+                self.data[epi-i] += 1
+        print("New board: ", self.data)
+
+        print(caseload)
+        return caseload
+
 
 
 board = Board(10,2)
 
-print(board.size)
+board.move(0)
+
+board.move(1)
+
+board.move(2)
